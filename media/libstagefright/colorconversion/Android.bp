@@ -1,0 +1,46 @@
+cc_library_static {
+    name: "libstagefright_color_conversion",
+
+    srcs: [
+        "ColorConverter.cpp",
+        "SoftwareRenderer.cpp",
+    ],
+
+    include_dirs: [
+        "frameworks/native/include/media/openmax",
+        "frameworks/av/media/libstagefright/colorconversion/inc",
+        "frameworks/av/include/media/stagefright/dpframework",
+    ],
+
+    product_variables: {
+        lineage: {
+            uses_mtk_hardware: {
+             cppflags: ["-DMTK_HARDWARE"],
+            },
+        },
+    },
+
+    shared_libs: [
+        "libui",
+        "libnativewindow",
+		"libdpframework",
+    ],
+
+    static_libs: [
+    "libyuv_static",
+    ],
+
+    cflags: ["-Werror"],
+	
+	// allow_undefined_symbols: true,
+	
+    sanitize: {
+        misc_undefined: [
+            "signed-integer-overflow",
+        ],
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+}
